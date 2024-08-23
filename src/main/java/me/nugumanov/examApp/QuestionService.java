@@ -14,6 +14,8 @@ public interface QuestionService {
 
     Collection<Question> getAll();
 
+    Question getRandomQuestion();
+
     Question getRandomQuestion(int maxCount);
 
     int amountOfQuestions();
