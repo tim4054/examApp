@@ -1,5 +1,6 @@
 package me.nugumanov.examApp.services;
 
+import me.nugumanov.examApp.Exceptions.QuestionAmountOverException;
 import me.nugumanov.examApp.models.Question;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,9 +14,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -52,21 +54,13 @@ class ExaminerServiceImplTest {
     @Test
     @DisplayName("Исключение")
     void getQuestions2() {
-        List<Question> questions = List.of(
-                new Question("Вопрос1", "Ответ1"),
-                new Question("Вопрос2", "Ответ2"),
-                new Question("Вопрос3", "Ответ3")
-        );
-        Question expected = questions.get(new Random().nextInt(0, questions.size()));
 
-        when(javaQuestionService.amountOfQuestions()).thenReturn(3);
-        when(javaQuestionService.getRandomQuestion()).thenReturn(expected);
+        when(javaQuestionService.amountOfQuestions()).thenThrow(QuestionAmountOverException.class);
 
-        //test
-        Collection<Question> actual = examinerService.getQuestions(1);
+        //test && check
+        assertThatExceptionOfType(QuestionAmountOverException.class).
+        isThrownBy(() -> examinerService.getQuestions(4));
 
-        //check
-        assertThat(actual).contains(expected);
 
     }
 }
