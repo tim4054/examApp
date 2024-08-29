@@ -21,5 +21,4 @@ public class ExamController {
     public Collection<Question> getQuestions(@PathVariable int amount) {
         return service.getQuestions(amount);
     }
-
 }

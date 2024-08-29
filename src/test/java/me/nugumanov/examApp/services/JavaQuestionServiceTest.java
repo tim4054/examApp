@@ -68,7 +68,7 @@ class JavaQuestionServiceTest {
     void remove_WhenCollectionDoesNotContainQuestion_ThenTrowsNotFoundQuestion() {
         service.add(new Question("Вопрос", "Ответ"));
 
-        //test & check
+        //test && check
         Assertions.assertThrows(NotFoundQuestion.class,
                 () -> service.remove(new Question("Вопрос1", "Ответ1")));
     }
@@ -87,7 +87,7 @@ class JavaQuestionServiceTest {
 
     @Test
     void getAll_WhenCollectionIsEmpty_ThenTrowsCollectionIsEmptyException() {
-        //test & check
+        //test && check
         Assertions.assertThrows(CollectionIsEmptyException.class,
                 service::getAll);
     }

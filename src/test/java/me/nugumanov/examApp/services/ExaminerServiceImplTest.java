@@ -9,13 +9,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -48,19 +46,25 @@ class ExaminerServiceImplTest {
 
         //check
         assertThat(actual).contains(expected);
-
     }
 
     @Test
     @DisplayName("Исключение")
     void getQuestions2() {
-
         when(javaQuestionService.amountOfQuestions()).thenThrow(QuestionAmountOverException.class);
 
         //test && check
         assertThatExceptionOfType(QuestionAmountOverException.class).
-        isThrownBy(() -> examinerService.getQuestions(4));
+                isThrownBy(() -> examinerService.getQuestions(4));
+    }
 
+    @Test
+    @DisplayName("Исключение при минусовом количестве")
+    void getQuestions3() {
+        when(javaQuestionService.amountOfQuestions()).thenThrow(QuestionAmountOverException.class);
 
+        //test && check
+        assertThatExceptionOfType(QuestionAmountOverException.class).
+                isThrownBy(() -> examinerService.getQuestions(-1));
     }
 }

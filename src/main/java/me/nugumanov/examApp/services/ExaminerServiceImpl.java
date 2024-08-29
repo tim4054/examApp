@@ -27,17 +27,4 @@ public class ExaminerServiceImpl implements ExaminerService {
         }
         return questionSet;
     }
-
-    //Test
-    public static void main(String[] args) {
-        ExaminerService examinerService = new ExaminerServiceImpl(new JavaQuestionService());
-
-        System.out.println(examinerService.getQuestions(1));
-        System.out.println(examinerService.getQuestions(2));
-        System.out.println(examinerService.getQuestions(3));
-        System.out.println(examinerService.getQuestions(4));
-        System.out.println(examinerService.getQuestions(5));
-
-
-    }
 }
