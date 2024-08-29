@@ -13,15 +13,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JavaQuestionServiceTest {
     private final JavaQuestionService service = new JavaQuestionService();
 
     @Test
-    void add_WhenCorrectParams_ThenAddQuestion() {
+    void addTroughParams_WhenCorrectParams_ThenAddQuestion() {
         Question expected = new Question("Вопрос1", "Ответ1");
 
         //test
@@ -39,7 +37,14 @@ class JavaQuestionServiceTest {
     }
 
     @Test
-    void testAdd() {
+    void AddTroughObject_WhenCorrectParams_ThenAddQuestion() {
+        Question expected = new Question("Вопрос", "Ответ");
+
+        //test
+        Question actual = service.add(expected);
+
+        //check
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -85,14 +90,6 @@ class JavaQuestionServiceTest {
         //test & check
         Assertions.assertThrows(CollectionIsEmptyException.class,
                 service::getAll);
-    }
-
-    @Test
-    void getRandomQuestion() {
-    }
-
-    @Test
-    void testGetRandomQuestion() {
     }
 
     public static Stream<Arguments> paramsStream() {

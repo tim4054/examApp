@@ -16,7 +16,5 @@ public interface QuestionService {
 
     Question getRandomQuestion();
 
-    Question getRandomQuestion(int maxCount);
-
     int amountOfQuestions();
 }

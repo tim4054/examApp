@@ -80,16 +80,6 @@ public class JavaQuestionService implements QuestionService {
     }
 
     @Override
-    public Question getRandomQuestion(int maxCount) {
-
-        checkCollectionIsEmpty();
-
-        List<Question> questionsList = new ArrayList<>(questions);
-        Random random = new Random();
-        return questionsList.get(random.nextInt(0, maxCount));
-    }
-
-    @Override
     public int amountOfQuestions() {
         return questions.size();
     }
