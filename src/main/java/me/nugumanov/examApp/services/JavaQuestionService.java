@@ -14,14 +14,7 @@ public class JavaQuestionService implements QuestionService {
 
     private final Set<Question> questions;
 
-//    private final Set<Question> questions = new HashSet<>(List.of(
-//            new Question("Вопрос1", "Ответ1"),
-//            new Question("Вопрос2", "Ответ2"),
-//            new Question("Вопрос3", "Ответ3"),
-
-
-//            new Question("Вопрос4", "Ответ4"),
-//            new Question("Вопрос5", "Ответ5")));
+    private static final Random random = new Random();
 
 
     public JavaQuestionService() {
@@ -49,22 +42,24 @@ public class JavaQuestionService implements QuestionService {
     }
 
     @Override
-    public Question remove(Question question) {
+    public Question remove(String question, String answer) {
 
-        checkCollectionIsEmpty();
+        checkCollectionIsEmpty("Нечего удалять, так как коллекция пуста");
 
-        if (questions.contains(question)) {
-            questions.remove(question);
-        } else {
+        checkNotParams(question, answer);
+
+        Question questionToRemove = new Question(question, answer);
+
+        if (!questions.remove(questionToRemove)) {
             throw new NotFoundQuestion();
         }
-        return question;
+        return questionToRemove;
     }
 
     @Override
     public Collection<Question> getAll() {
 
-        checkCollectionIsEmpty();
+        checkCollectionIsEmpty("Нечего отображать, так как коллекция пуста");
 
         return Collections.unmodifiableSet(questions);
     }
@@ -72,10 +67,9 @@ public class JavaQuestionService implements QuestionService {
     @Override
     public Question getRandomQuestion() {
 
-        checkCollectionIsEmpty();
+        checkCollectionIsEmpty("Нечего отображать, так как коллекция пуста");
 
         List<Question> questionsList = new ArrayList<>(questions);
-        Random random = new Random();
         return questionsList.get(random.nextInt(0, amountOfQuestions()));
     }
 
@@ -84,9 +78,9 @@ public class JavaQuestionService implements QuestionService {
         return questions.size();
     }
 
-    public void checkCollectionIsEmpty() {
+    public void checkCollectionIsEmpty(String message) {
         if (questions.isEmpty()) {
-            throw new CollectionIsEmptyException();
+            throw new CollectionIsEmptyException(message);
         }
     }
 

@@ -46,25 +46,30 @@ class ExaminerServiceImplTest {
 
         //check
         assertThat(actual).contains(expected);
+        verify(javaQuestionService, times(1)).amountOfQuestions();
+        verify(javaQuestionService, times(1)).getRandomQuestion();
     }
 
     @Test
-    @DisplayName("Исключение")
+    @DisplayName("Выбрасывает исключение, " +
+            "когда количество запрашиваемых вопросов превышает количество вопросов в коллекции")
     void getQuestions2() {
         when(javaQuestionService.amountOfQuestions()).thenThrow(QuestionAmountOverException.class);
 
         //test && check
         assertThatExceptionOfType(QuestionAmountOverException.class).
                 isThrownBy(() -> examinerService.getQuestions(4));
+        verify(javaQuestionService, times(1)).amountOfQuestions();
     }
 
     @Test
-    @DisplayName("Исключение при минусовом количестве")
+    @DisplayName("Выбрасывает исключение при минусовом количестве")
     void getQuestions3() {
         when(javaQuestionService.amountOfQuestions()).thenThrow(QuestionAmountOverException.class);
 
         //test && check
         assertThatExceptionOfType(QuestionAmountOverException.class).
                 isThrownBy(() -> examinerService.getQuestions(-1));
+        verify(javaQuestionService, times(1)).amountOfQuestions();
     }
 }

@@ -22,7 +22,7 @@ public class ExaminerServiceImpl implements ExaminerService {
             throw new QuestionAmountOverException();
         }
         Set<Question> questionSet = new HashSet<>();
-        while (questionSet.size() != amount) {
+        while (questionSet.size() < amount) {
             questionSet.add(questionService.getRandomQuestion());
         }
         return questionSet;

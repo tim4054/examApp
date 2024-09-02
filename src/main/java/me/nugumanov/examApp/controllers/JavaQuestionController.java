@@ -32,7 +32,6 @@ public class JavaQuestionController {
     @GetMapping("/remove")
     public Question remove(@RequestParam String question,
                            @RequestParam String answer) {
-        Question questionToRemove = new Question(question,answer);
-        return service.remove(questionToRemove);
+        return service.remove(question, answer);
     }
 }

@@ -49,9 +49,12 @@ class JavaQuestionServiceTest {
 
     @Test
     void remove_WhenCollectionContainsQuestion_ThenRemoveQuestion() {
-        Question question = new Question("Вопрос", "Ответ");
-        service.add(question);
-        service.remove(question);
+        String question = "Вопрос";
+        String answer = "Ответ";
+
+        Question expected = new Question(question, answer);
+        service.add(expected);
+        service.remove(question, answer);
 
         //check
         assertThat(service.getQuestions()).isEmpty();
@@ -61,7 +64,7 @@ class JavaQuestionServiceTest {
     void remove_WhenCollectionIsEmpty_ThenTrowsCollectionIsEmptyException() {
         //test & check
         Assertions.assertThrows(CollectionIsEmptyException.class,
-                () -> service.remove(new Question("Вопрос", "Ответ")));
+                () -> service.remove("Вопрос", "Ответ"));
     }
 
     @Test
@@ -70,7 +73,16 @@ class JavaQuestionServiceTest {
 
         //test && check
         Assertions.assertThrows(NotFoundQuestion.class,
-                () -> service.remove(new Question("Вопрос1", "Ответ1")));
+                () -> service.remove("Вопрос1", "Ответ1"));
+    }
+
+    @ParameterizedTest
+    @MethodSource("paramsStream")
+    void remove_WhenNullParams_ThenTrowsNotParamsException(String question, String answer) {
+        service.add(new Question("Вопрос", "Ответ"));
+
+        //test & check
+        Assertions.assertThrows(NotParamsException.class, () -> service.remove(question, answer));
     }
 
     @Test

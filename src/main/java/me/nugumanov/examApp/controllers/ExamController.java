@@ -11,7 +11,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/exam/get/{amount}")
 public class ExamController {
-    ExaminerService service = new ExaminerServiceImpl(new JavaQuestionService());
+    private final ExaminerService service;
 
     public ExamController(ExaminerService service) {
         this.service = service;
